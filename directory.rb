@@ -27,6 +27,16 @@ def print_name(students)
   end
 end
 
+def print_find_name_with_letter(students)
+  puts " please enter letter"
+  letter = gets.chomp
+  students.each_with_index do |student,i|
+    if student[:name][0] == letter
+      puts "#{i+1}: #{student[:name]} (cohort - #{student[:cohort]} )"
+    end
+  end
+end
+
 def print_footer(names)
   # Now we add a print statement to count the number of students
   print "Overall we have #{names.count} great students!"
@@ -37,3 +47,5 @@ students = input_students
 print_header
 print_name(students)
 print_footer(students)
+
+print_find_name_with_letter(students)
