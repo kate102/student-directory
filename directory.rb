@@ -27,6 +27,15 @@ def print_name(students)
   end
 end
 
+def print_name_with_while(students)
+  i = 0
+  student_array = students.flatten
+  while i < student_array.length do
+    puts "#{i+1}: #{student_array[i][:name]} (cohort - #{student_array[i][:cohort]} )"
+    i += 1 
+  end
+end
+
 def print_find_name_with_letter(students)
   puts " please enter letter"
   letter = gets.chomp
@@ -54,8 +63,8 @@ end
 # Now to call the methods
 students = input_students
 print_header
-print_name(students)
+print_name_with_while(students)
 print_footer(students)
 
 # print_find_name_with_letter(students)
-print_short_name(students)
+# print_short_name(students)
