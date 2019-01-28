@@ -1,18 +1,20 @@
-# Put all of the students in an array
-students = [
-    {name: "Dr. Hannibal Lecter", cohort: :november},
-    {name: "Darth Vader",cohort: :november},
-    {name: "Nurse Ratched", cohort: :november},
-    {name: "Michael Corleone", cohort: :november},
-    {name: "Alex DeLarge", cohort: :november},
-    {name: "the Wicked Witch of the West", cohort: :november},
-    {name: "Terminator", cohort: :november},
-    {name: "Freddie Kruger", cohort: :november},
-    {name: "The Joker", cohort: :november},
-    {name: "Joffrey Baratheon", cohort: :november},
-    {name: "Norman Bates", cohort: :november}
-]
-
+def input_students
+  puts "PLease enter the names of the students"
+  puts "To finish, just hit return twice"
+  # create and empty array
+  students = []
+  # get the first name
+  name = gets.chomp
+  while !name.empty? do
+    # add the student has to the array
+    students << {name: name, cohort: :november}
+    puts "Now we have #{students.count} students"
+    name = gets.chomp
+  end
+  # return the array of students
+  students
+end
+ 
 def print_header
   # And then print them
   puts "The students of Villians Academy"
@@ -31,6 +33,7 @@ def print_footer(names)
 end
 
 # Now to call the methods
+students = input_students
 print_header
 print_name(students)
 print_footer(students)
