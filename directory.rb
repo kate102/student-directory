@@ -37,6 +37,15 @@ def print_find_name_with_letter(students)
   end
 end
 
+def print_short_name(students)
+  puts "\n The list of students with names shorter than 12 is :"
+  students.each_with_index do |student,i|
+    if student[:name].length < 12
+      puts "#{i+1}: #{student[:name]} (cohort - #{student[:cohort]} )"
+    end
+  end
+end
+
 def print_footer(names)
   # Now we add a print statement to count the number of students
   print "Overall we have #{names.count} great students!"
@@ -48,4 +57,5 @@ print_header
 print_name(students)
 print_footer(students)
 
-print_find_name_with_letter(students)
+# print_find_name_with_letter(students)
+print_short_name(students)
