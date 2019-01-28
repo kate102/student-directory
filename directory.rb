@@ -27,6 +27,7 @@ def print_name(students)
   end
 end
 
+# This is probably cheating...!
 def print_name_with_while(students)
   i = 0
   student_array = students.flatten
