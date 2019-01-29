@@ -1,5 +1,28 @@
+def get_cohort
+  cohort_array = [ 
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+  ]
+    cohort = "" 
+    while cohort_array.count(cohort) == 0 do
+      puts "Please enter a valid cohort"
+      cohort = gets.chomp
+    end
+    return cohort
+end
+
 def input_students
-  puts "PLease enter the names of the students"
+  puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
   # create and empty array
   students = []
@@ -24,12 +47,15 @@ def input_students_data
   puts "Please enter the name of the student"
   name = gets.chomp
   while !name.empty? do
+    cohort = get_cohort
+    # puts "Please enter their cohort"
+    # cohort = gets.chomp
     puts "Please enter their height"
     height = gets.chomp
     puts "and their favorite icecream "
     icecream = gets.chomp
     # add the student has to the array
-    students << {name: name, cohort: :november, height: height, icecream: icecream}
+    students << {name: name, cohort: cohort, height: height, icecream: icecream}
     puts "Now we have #{students.count} students"
     puts "Please enter the name of the student"
     name = gets.chomp
@@ -40,15 +66,15 @@ end
  
 def print_header
   # And then print them
-  header_string1 = "The students of Villians Academy"
+  header_string1 = "The Students of Villians Academy"
   header_string2 = "-" * header_string1.length
   puts header_string1.center(50)
-  puts header_string2.center(50)
+  puts header_string2.center(50,"-")
 end
 
 def print_details(students)
   students.each_with_index do |student,i|
-    puts "#{i+1}: #{student[:name]} (cohort - #{student[:cohort]} ) Height is #{student[:height]} and favorite icrecream is #{student[:icecream]}"
+    puts "#{i+1}: #{student[:name]} cohort - #{student[:cohort]}  Height is #{student[:height]} and favorite icecream is #{student[:icecream]}"
   end
 end
 
