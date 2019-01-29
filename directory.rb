@@ -15,10 +15,36 @@ def input_students
   students
 end
  
+def input_students_data
+  puts "Please enter the names of the students"
+  puts "Their height and their favorite icecream "
+  puts "To finish, just hit return twice"
+  # create and empty array
+  students = []
+  # get the first name
+  name = gets.chomp
+  height = gets.chomp
+  icecream = gets.chomp
+  while !name.empty? do
+    # add the student has to the array
+    students << {name: name, cohort: :november, height: height, icecream: icecream}
+    puts "Now we have #{students.count} students"
+    name = gets.chomp
+  end
+  # return the array of students
+  students
+end
+ 
 def print_header
   # And then print them
   puts "The students of Villians Academy"
   puts "---------------"
+end
+
+def print_details(students)
+  students.each_with_index do |student,i|
+    puts "#{i+1}: #{student[:name]} (cohort - #{student[:cohort]} ) Height is #{student[:height]} and favorite icrecream is #{student[:icecream]}"
+  end
 end
 
 def print_name(students)
@@ -62,9 +88,11 @@ def print_footer(names)
 end
 
 # Now to call the methods
-students = input_students
+students = input_students_data
 print_header
-print_name_with_while(students)
+# print_name_with_while(students)
+# print_name(students)
+print_details(students)
 print_footer(students)
 
 # print_find_name_with_letter(students)
