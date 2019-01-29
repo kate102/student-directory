@@ -11,12 +11,16 @@ def get_cohort
       "September",
       "October",
       "November",
-      "December"
+      "December",
+      "Unknown"
   ]
     cohort = "" 
     while cohort_array.count(cohort) == 0 do
       puts "Please enter a valid cohort"
       cohort = gets.chomp
+      if cohort.empty?
+        cohort = "Unknown"
+      end
     end
     return cohort
 end
