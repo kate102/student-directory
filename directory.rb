@@ -30,12 +30,14 @@ def input_students
   puts "To finish, just hit return twice"
   # create and empty array
   students = []
+  s_string = "student"
   # get the first name
   name = gets.chomp
   while !name.empty? do
     # add the student has to the array
     students << {name: name, cohort: :november}
-    puts "Now we have #{students.count} students"
+    puts "Now we have #{students.count} #{s_string}"
+    s_string << "s"
     name = gets.chomp
   end
   # return the array of students
@@ -47,6 +49,7 @@ def input_students_data
   puts "To finish, just hit return twice"
   # create and empty array
   students = []
+  s_string = "student"
   # get the first name
   puts "Please enter the name of the student"
   name = gets.chomp
@@ -60,7 +63,8 @@ def input_students_data
     icecream = gets.chomp
     # add the student has to the array
     students << {name: name, cohort: cohort, height: height, icecream: icecream}
-    puts "Now we have #{students.count} students"
+    puts "Now we have #{students.count} #{s_string}"
+    s_string << "s"
     puts "Please enter the name of the student"
     name = gets.chomp
   end
@@ -117,9 +121,39 @@ def print_short_name(students)
   end
 end
 
+# Print the students grouped in their cohorts
+def print_cohort_grouping(students)
+    
+  cohort_hash = { 
+      "January" =>[],
+      "February" =>[],
+      "March" =>[],
+      "April" =>[],
+      "May" =>[],
+      "June" =>[],
+      "July" =>[],
+      "August" =>[],
+      "September" =>[],
+      "October" =>[],
+      "November" =>[],
+      "December" =>[],
+      "Unknown" =>[]
+  }
+  puts "We have #{students.length}"
+  students.map { |student| puts "#{student[:cohort]}"}
+  
+
+#  students.map { |student|  cohort_hash{student[:cohort]} << student[:name]}
+end
+
 def print_footer(names)
   # Now we add a print statement to count the number of students
-  print "Overall we have #{names.count} great students!"
+  n = names.count
+  s = "student"
+  if n > 1 
+    s << "s"
+  end
+  print "Overall we have #{n} great #{s}!"
 end
 
 # Now to call the methods
@@ -128,6 +162,9 @@ print_header
 # print_name_with_while(students)
 # print_name(students)
 print_details(students)
+puts "---------------------------------"
+print_cohort_grouping(students)
+puts "---------------------------------"
 print_footer(students)
 
 # print_find_name_with_letter(students)
