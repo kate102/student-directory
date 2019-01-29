@@ -40,8 +40,10 @@ end
  
 def print_header
   # And then print them
-  puts "The students of Villians Academy"
-  puts "---------------"
+  header_string1 = "The students of Villians Academy"
+  header_string2 = "-" * header_string1.length
+  puts header_string1.center(50)
+  puts header_string2.center(50)
 end
 
 def print_details(students)
