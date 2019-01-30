@@ -23,6 +23,8 @@ def process(selection)
       print_students           
     when "3"
       save_students           
+    when "4"
+      load_students           
     when "9"
       exit
     else
@@ -50,9 +52,7 @@ def input_students
 end
 
 def save_students
-  d = Date.today
-  puts d
-  file_name = "students.csv:" + d.to_s
+  file_name = "students.csv" # + Date.today.to_s
   # Open the file for writing
   file = File.open(file_name,"w")
   @students.each do |student|
@@ -62,6 +62,19 @@ def save_students
   end
   file.close
   puts "Student Details Written To File #{file_name}"
+end
+
+
+def load_students
+  file_name = "students.csv" # + Date.today.to_s
+  # Open the file for writing
+  file = File.open(file_name,"r")
+  file.readlines.each do |line|
+    name, cohort = line.chomp.split(',')
+    @students << {name: name, cohort: cohort.to_sym}
+  end
+  file.close
+  puts "Student Details Read from File #{file_name}"
 end
 
 # ------- Print Methods ---------
@@ -74,6 +87,7 @@ def print_menu
   puts "1. Input the students details"
   puts "2. Show the students details"
   puts "3. Save the students details to file (student.csv) "
+  puts "4. Load the students details from a file (student.csv) "
   puts "9. Exit"
 end
 
