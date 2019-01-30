@@ -1,5 +1,6 @@
 @students = []
 
+# ------- Main Menu Loop --------
 def interactive_menu
   loop do
     print_menu
@@ -7,12 +8,15 @@ def interactive_menu
   end # loop
 end
 
+# ------- Processing Methods ----
 def process(selection)
   case selection
     when "1"
       @students = input_students
     when "2"
       show_students           
+    when "3"
+      save_students           
     when "9"
       exit
     else
@@ -20,6 +24,7 @@ def process(selection)
   end # case
 end
 
+# ------- Input Methods ---------
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
@@ -37,6 +42,17 @@ def input_students
   return @students
 end
 
+def show_students
+  print_header
+  print_details
+  print_footer
+end
+
+def save_students
+  puts "In save Students from themselves"
+end
+
+# ------- Print Methods ---------
 def print_menu
   s = "-" * 50
   puts s.center(50)
@@ -44,13 +60,8 @@ def print_menu
   puts s.center(50)
   puts "1. Input the students details"
   puts "2. Show the students details"
+  puts "3. Save the students details to file (student.csv) "
   puts "9. Exit"
-end
-
-def show_students
-  print_header
-  print_details
-  print_footer
 end
 
 def print_header
@@ -74,5 +85,5 @@ def print_footer
   end
 end
 
-
+# -----------------------------
 interactive_menu
