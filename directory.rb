@@ -4,19 +4,23 @@ def input_students_data
   puts "To finish, just hit return twice"
   students = []
   s_string = "student"
-  puts "Please enter the name of the student"
+  puts "Please enter the name of the student followed by their cohort"
   name = gets.chomp
   while !name.empty? do
+    cohort = gets.chomp
+    if cohort.empty?
+      cohort = "Unknown"
+    end
     puts "Please enter their height"
     height = gets.chomp
     puts "and their country of birth  "
     cob = gets.chomp
     puts "and finally, their hobbies"
     hobbies = gets.chomp
-    students << {name: name, cohort: :november , height: height, cob: cob, hobbies: hobbies}
+    students << {name: name, cohort: cohort , height: height, cob: cob, hobbies: hobbies}
     puts "Now we have #{students.count} #{s_string}"
     s_string << "s"
-    puts "Please enter the name of the student"
+    puts "Please enter the name of the student followed by their cohort"
     name = gets.chomp
   end
   # return the array of students
