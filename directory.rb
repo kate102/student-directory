@@ -16,29 +16,14 @@ def print_header
   puts "-------------"
 end
 
-def print_find_name_with_letter(students)
-  puts "Please enter letter"
-  letter = gets.chomp
-  students.each_with_index do |student,i|
-    if student[:name][0] == letter
-      puts "#{i+1}: #{student[:name]} (cohort - #{student[:cohort]} )"
-    end
-  end
-end
-
 # Print names < 12 chars
 def print_short(students)
-  students.each do |student|
-    if student[:name].length < 12
-      puts "#{student[:name]} (#{student[:cohort]} cohort)"
+  x = 0
+  while x < students.length do 
+    if students[x][:name].length < 12
+      puts "#{students[x][:name]} (#{students[x][:cohort]} cohort)"
     end
-  end
-end
-
-# Print the number
-def print(students)
-  students.each_with_index do |student,i|
-    puts "#{i+1}: #{student[:name]} (#{student[:cohort]} cohort)"
+    x += 1
   end
 end
 
@@ -51,6 +36,4 @@ end
 students = input_students
 print_header
 print_short(students)
-# print_find_name_with_letter(students)
-# print(students)
 print_footer(students)
