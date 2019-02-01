@@ -1,6 +1,33 @@
 # The list of possible co-horts, Unknown is the default
 @cohorts = ["Unknown","January","February","March","April","May","June","July","August","September","October","November","December"]
 
+@cohort_hash = {
+      :January =>[],
+      :February =>[],
+      :March =>[],
+      :April =>[],
+      :May =>[],
+      :June =>[],
+      :July =>[],
+      :August =>[],
+      :September =>[],
+      :October =>[],
+      :November =>[],
+      :December =>[],
+      :Unknown =>[]
+  }
+
+def print_cohort_grouping(students)
+  students.each do |student|
+    @cohort_hash[student[:cohort]] << student[:name]
+  end
+  @cohort_hash.each do |key, value|
+    if  !value.empty?
+      puts  "#{key} Students are #{value}"
+    end
+  end
+end
+
 def input_students_data
   puts "Please enter the details of the students"
   puts "To finish, just hit return twice"
@@ -72,3 +99,4 @@ students = input_students_data
 print_header
 print_details(students)
 print_footer(students)
+print_cohort_grouping(students)
