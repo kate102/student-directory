@@ -35,6 +35,7 @@ def input_students_data
   s_string = "student"
   puts "Please enter the name of the student followed by their cohort"
   name = gets.chomp
+  # text3 = text2[0,text2.length-1]
   while !name.empty? do
     cohort = gets.chomp.to_sym
     while @cohorts.find_index(cohort.to_s) == nil && !cohort.empty? do
@@ -85,7 +86,7 @@ end
 
 def print_details(students)
   students.each_with_index do |student,i|
-    puts "#{i+1}: #{student[:name]}" +"cohort - #{student[:cohort]}".to_s.center(20) + "Height is #{student[:height]}".center(30) + "CoB is #{student[:cob]}".center(50) + " and hobbies are #{student[:hobbies]}"
+    puts "#{i+1}: #{student[:name]}".ljust(20)  +"cohort - #{student[:cohort]}".to_s.ljust(20) + "Height is #{student[:height]}".ljust(20) + "CoB is #{student[:cob]}".ljust(20) + " and hobbies are #{student[:hobbies]}"
   end
 end
 
