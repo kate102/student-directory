@@ -40,13 +40,15 @@ def input_students
 end
 
 def print_header
-  puts "The students of Villains Academy"
-  puts "-------------"
+  header_string1 = "The Students of Villians Academy"
+  header_string2 = "-" * header_string1.length
+  puts header_string1.center(150)
+  puts header_string2.center(150,"-")
 end
 
 def print_details(students)
   students.each_with_index do |student,i|
-    puts "#{i+1}: #{student[:name]} cohort - #{student[:cohort]} Height is #{student[:height]}, CoB is #{student[:cob]} and hobbies are #{student[:hobbies]}"
+    puts "#{i+1}: #{student[:name]}" +"cohort - #{student[:cohort]}".to_s.center(20) + "Height is #{student[:height]}".center(30) + "CoB is #{student[:cob]}".center(50) + " and hobbies are #{student[:hobbies]}"
   end
 end
 
