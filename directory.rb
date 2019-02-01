@@ -26,6 +26,15 @@ def print_find_name_with_letter(students)
   end
 end
 
+# Print names < 12 chars
+def print_short(students)
+  students.each do |student|
+    if student[:name].length < 12
+      puts "#{student[:name]} (#{student[:cohort]} cohort)"
+    end
+  end
+end
+
 # Print the number
 def print(students)
   students.each_with_index do |student,i|
@@ -41,6 +50,7 @@ end
 
 students = input_students
 print_header
-print_find_name_with_letter(students)
+print_short(students)
+# print_find_name_with_letter(students)
 # print(students)
 print_footer(students)
