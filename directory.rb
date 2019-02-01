@@ -1,3 +1,5 @@
+# The list of possible co-horts, Unknown is the default
+@cohorts = ["Unknown","January","February","March","April","May","June","July","August","September","October","November","December"]
 
 def input_students_data
   puts "Please enter the details of the students"
@@ -7,9 +9,13 @@ def input_students_data
   puts "Please enter the name of the student followed by their cohort"
   name = gets.chomp
   while !name.empty? do
-    cohort = gets.chomp
+    cohort = gets.chomp.to_sym
+    while @cohorts.find_index(cohort.to_s) == nil && !cohort.empty? do
+      puts "Please enter a valid cohort"    
+      cohort = gets.chomp.to_sym
+    end
     if cohort.empty?
-      cohort = "Unknown"
+      cohort = "Unknown".to_sym
     end
     puts "Please enter their height"
     height = gets.chomp
