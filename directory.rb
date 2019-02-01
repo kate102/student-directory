@@ -11,13 +11,22 @@ def input_students
   students
 end
 
-
 def print_header
   puts "The students of Villains Academy"
   puts "-------------"
 end
 
-# Print the symbol
+def print_find_name_with_letter(students)
+  puts "Please enter letter"
+  letter = gets.chomp
+  students.each_with_index do |student,i|
+    if student[:name][0] == letter
+      puts "#{i+1}: #{student[:name]} (cohort - #{student[:cohort]} )"
+    end
+  end
+end
+
+# Print the number
 def print(students)
   students.each_with_index do |student,i|
     puts "#{i+1}: #{student[:name]} (#{student[:cohort]} cohort)"
@@ -32,5 +41,6 @@ end
 
 students = input_students
 print_header
-print(students)
+print_find_name_with_letter(students)
+# print(students)
 print_footer(students)
