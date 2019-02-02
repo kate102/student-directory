@@ -10,6 +10,5 @@ The Student Directory allows you to manage the list of students enrolled into th
 ''' 
 
 This program will give a menu of options that allow the user to input, display student data.
-This version of the code is specifically for Section 8 on week 4 of the Makers Precourse.
-To make it easy to check I have commented each solution to each question in the following manner
-'### Step 8 - Q' with the question number and the task 
+In addition is it possible to save the student names to a file, the default file name is student.csv
+However it is possible to input an alternative name to read from and write too.
