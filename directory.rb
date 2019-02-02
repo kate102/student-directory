@@ -1,136 +1,106 @@
-### Step 8 - Q11 Note that this is doe outside this program
-#
-# The list of possible co-horts, Unknown is the default
-@cohorts = ["Unknown","January","February","March","April","May","June","July","August","September","October","November","December"]
+@students = [] # an empty array accessible to all methods
 
-@cohort_hash = {
-      :January =>[],
-      :February =>[],
-      :March =>[],
-      :April =>[],
-      :May =>[],
-      :June =>[],
-      :July =>[],
-      :August =>[],
-      :September =>[],
-      :October =>[],
-      :November =>[],
-      :December =>[],
-      :Unknown =>[]
-  }
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "3. Save the list to students.csv"
+  puts "4. Load the list from students.csv"
+  puts "9. Exit" # 9 because we'll be adding more items
+end
 
-### Step 8 - Q8 Group by cohort
-def print_cohort_grouping(students)
-  students.each do |student|
-    @cohort_hash[student[:cohort]] << student[:name]
-  end
-  @cohort_hash.each do |key, value|
-    if  !value.empty?
-      puts  "#{key} Students are #{value}"
-    end
+def interactive_menu
+  loop do
+    print_menu
+    process(STDIN.gets.chomp)
   end
 end
 
-def input_students_data
-  puts "Please enter the details of the students"
-  puts "To finish, just hit return twice"
-  students = []
-  ### Step 8 - Q9 Output student/s depending on number of students
-  s_string = "student"
-  puts "Please enter the name of the student followed by their cohort"
-  ### Step 8 - Q10 Use something instead of chomp
-  name = gets.sub("\n","") 
-  ### Step 8 - Q4 Use while instead of each
-  ### Step 8 - Q7 Get the cohort, convert from symbol and deal with invalid or empty strings and provide a default
-  while !name.empty? do
-    cohort = gets.chomp.to_sym
-    while @cohorts.find_index(cohort.to_s) == nil && !cohort.empty? do
-      puts "Please enter a valid cohort"    
-      cohort = gets.chomp.to_sym
-    end
-    if cohort.empty?
-      cohort = "Unknown".to_sym
-    end
-    ### Step 8 - Q5 Input additional details 
-    puts "Please enter their height"
-    height = gets.chomp
-    puts "and their country of birth  "
-    cob = gets.chomp
-    puts "and finally, their hobbies"
-    hobbies = gets.chomp
-    students << {name: name, cohort: cohort , height: height, cob: cob, hobbies: hobbies}
-    puts "Now we have #{students.count} #{s_string}"
-    s_string << "s"
-    puts "Please enter the name of the student followed by their cohort"
-    name = gets.chomp
+def process(selection)
+  case selection
+  when "1"
+    input_students
+  when "2"
+    show_students
+  when "3"
+    save_students
+  when "4"
+    load_students
+  when "9"
+    exit # this will cause the program to terminate
+  else
+    puts "I don't know what you meant, try again"
   end
-  # return the array of students
-  return students
 end
-  
+
 def input_students
   puts "Please enter the names of the students"
-  puts "To finish, hit return twice"
-  students = []
-  name = gets.chomp
+  puts "To finish, just hit return twice"
+  # get the first name
+  name = STDIN.gets.chomp
+  # while the name is not empty, repeat this code
   while !name.empty? do
-   students << {name: name, cohort: :november}
-    puts "Now we have #{students.count} students"
-    name = gets.chomp
+    # add the student hash to the array
+    @students << {name: name, cohort: :november}
+    puts "Now we have #{@students.count} students"
+    # get another name from the user
+    name = STDIN.gets.chomp
   end
-  students
+end
+  
+def show_students
+  print_header
+  print_student_list
+  print_footer
 end
 
 def print_header
-  header_string1 = "The Students of Villians Academy"
-  header_string2 = "-" * header_string1.length
-  ### Step 8 - Q6 Use center to improve the display (Note that I have used ljust in print details to tabulate)
-  puts header_string1.center(150)
-  puts header_string2.center(150,"-")
+  puts "The students of Villains Academy"
+  puts "-------------"
 end
 
-### Step 8 - Q1 Print number
-def print_details(students)
-  ### Step 8 - Q12 Print students only if the list is not empty
-  if !students.empty?
-    students.each_with_index do |student,i|
-      puts "#{i+1}: #{student[:name]}".ljust(20)  +"cohort - #{student[:cohort]}".to_s.ljust(20) + "Height is #{student[:height]}".ljust(20) + "CoB is #{student[:cob]}".ljust(20) + " and hobbies are #{student[:hobbies]}"
-    end
-  else
-    puts "There are no students to show"
+def print_student_list
+  @students.each do |student|
+    puts "#{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
 
-### Step 8 - Q2 Print students whose names begin with a certain letter
-def print_find_name_with_letter(students)
-  puts " please enter letter"
-  letter = gets.chomp
-  students.each_with_index do |student,i|
-    if student[:name][0] == letter
-      puts "#{i+1}: #{student[:name]} (cohort - #{student[:cohort]} )"
-    end
+def print_footer
+  puts "Overall, we have #{@students.count} great students"
+end
+
+def save_students
+  # open the file for writing
+  file = File.open("students.csv", "w")
+  # iterate over the array of students
+  @students.each do |student|
+    student_data = [student[:name], student[:cohort]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
   end
+  file.close
 end
 
-### Step 8 - Q3 Print students whose names are shorter than 12 characters
-def print_short_name(students)
-  puts "\n The list of students with names shorter than 12 is :"
-  students.each_with_index do |student,i|
-    if student[:name].length < 12
-      puts "#{i+1}: #{student[:name]} (cohort - #{student[:cohort]} )"
-    end
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
+  file.readlines.each do |line|
+    name, cohort = line.chomp.split(',')
+    @students << {name: name, cohort: cohort.to_sym}
   end
+  file.close
 end
 
-
-def print_footer(names)
-  puts "Overall, we have #{names.count} great students"
+def try_load_students
+  filename = ARGV.first # first argument from the command line
+  return if filename.nil? # get out of the method if it isn't given
+    if File.exists?(filename) # if it exists
+      load_students(filename)
+      puts "Loaded #{@students.count} from #{filename}"
+    else # if it doesn't exist
+      puts "Sorry, #{filename} doesn't exist."
+      exit # quit the program
+    end
 end
+                                                       
+interactive_menu
+try_load_students
 
-# Nothing happens until we call the methods
-
-students = input_students_data
-print_header
-print_details(students)
-print_footer(students)
-print_cohort_grouping(students)
