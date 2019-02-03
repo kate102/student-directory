@@ -1,4 +1,4 @@
-require 'date'
+require 'csv'
 
 # ------- Initialise Global Variables --
 
@@ -35,6 +35,63 @@ def process(selection)
   end # case
 end
 
+# ------- File Management Methods -----
+# 1. Is a file name give?
+# 2. Does that file exist?
+# 3. Can we open it to read from or wrte to?
+
+def save_students
+  get_filename
+  puts "File name is [#{@file_name}]"
+  # Open the file for writing
+  CSV.open(@file_name,"w") do |csv|
+    @students.each do |student|
+      line = [student[:name],student[:cohort]]
+      csv << line
+    end
+  end
+  puts "Student Details Written To File #{@file_name}"
+end
+
+def load_students
+  # Empty the student array for loading, otherwise we get duplicates
+  @students.clear 
+  # Open the file for reading
+  CSV.foreach(@file_name) do |row|
+      name, cohort = row[0],row[1] 
+      update_array(name,cohort)
+    end
+  # end
+  puts "Student Details Read from File #{@file_name}"
+end
+
+def try_load_students
+  get_filename
+  # Open the file for writing
+  if File.exists?(@file_name) # Check it exists
+    load_students
+    puts "Loaded #{@students.count} from #{@file_name}"
+  else
+    # Output message and return to the menu
+    puts "Sorry but file, #{@file_name}, does not exist"
+    @file_name.clear
+  end
+end
+
+def get_filename
+  if @file_name.nil? || @file_name.length == 0 
+    puts "No commandline file name was specified" 
+    puts "Would you like to specify an input file?"
+    puts "if not then the default, student.csv will be used."
+    puts "Please enter the file name or press return"
+    @file_name = gets.chomp
+    if @file_name.length == 0
+      puts "Setting file name to #{DEFAULT_FILE_NAME}"
+      @file_name = DEFAULT_FILE_NAME
+    end
+  end
+end 
+
 # ------- Get and Store Data Methods --
 
 def input_students
@@ -59,61 +116,7 @@ def update_array(name, cohort = "november")
     puts "Now we have #{@students.count} students"
 end
 
-def save_students
-  get_filename
-  puts "File name is [#{@file_name}]"
-  # Open the file for writing
-  file = File.open(@file_name,"w")
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
-  end
-  file.close
-  puts "Student Details Written To File #{@file_name}"
-end
-
-
-def load_students(filename = "students.csv")
-  # Empty the student array for loading, otherwise we get duplicates
-  @students.clear 
-  # Open the file for writing
-  file = File.open(@file_name,"r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-    update_array(name,cohort)
-  end
-  file.close
-  puts "Student Details Read from File #{@file_name}"
-end
-
-def try_load_students
-  get_filename
-  # Open the file for writing
-  if File.exists?(@file_name) # Check it exists
-    load_students(@file_name)
-    puts "Loaded #{@students.count} from #{@file_name}"
-  else
-    # Output message and return to the menu
-    puts "Sorry but file, #{@file_name}, does not exist"
-    @file_name.clear
-  end
-end
     
-def get_filename
-  if @file_name.nil? || @file_name.length == 0 
-    puts "No commandline file name was specified" 
-    puts "Would you like to specify an input file?"
-    puts "if not then the default, student.csv will be used."
-    puts "Please enter the file name or press return"
-    @file_name = gets.chomp
-    if @file_name.length == 0
-      puts "Setting file name to #{DEFAULT_FILE_NAME}"
-      @file_name = DEFAULT_FILE_NAME
-    end
-  end
-end 
-
 # ------- Print Methods ---------
 
 def print_menu
