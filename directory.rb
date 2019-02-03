@@ -44,9 +44,10 @@ def input_students
   name = gets.chomp
   # while the name is not empty, repeat this code
   while !name.empty? do
+    update_array(name)
     # add the student hash to the array
-    @students << {name: name, cohort: :november}
-    puts "Now we have #{@students.count} students"
+    # @students << {name: name, cohort: :november}
+    # puts "Now we have #{@students.count} students"
     # get another name from the user
     name = gets.chomp
   end
@@ -54,6 +55,11 @@ def input_students
   return @students
 end
 
+def update_array(name, cohort = "november")
+    # add the student hash to the array
+    @students << {name: name, cohort: cohort.to_sym}
+    puts "Now we have #{@students.count} students"
+end
 def get_filename
   if @file_name.nil? 
     return @default_file_name
@@ -84,9 +90,10 @@ def load_students(filename = "students.csv")
   file = File.open(filename,"r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
+    update_array(name,cohort)
     # Note that this adds the students in the file to the local student list
     # Not sure that we would want to do this IRL
-    @students << {name: name, cohort: cohort.to_sym}
+    # @students << {name: name, cohort: cohort.to_sym}
   end
   file.close
   puts "Student Details Read from File #{filename}"
