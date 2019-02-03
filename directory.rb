@@ -4,7 +4,7 @@ require 'date'
 
 @students = []
 @file_name = ARGV.first
-@default_file_name = "students.csv"
+DEFAULT_FILE_NAME = "students.csv"
 
 # ------- Main Menu Loop --------
 
@@ -49,6 +49,7 @@ def input_students
     name = gets.chomp
   end
   # return the array of students
+  puts "Entering the student names was successful" 
   return @students
 end
 
@@ -57,26 +58,19 @@ def update_array(name, cohort = "november")
     @students << {name: name, cohort: cohort.to_sym}
     puts "Now we have #{@students.count} students"
 end
-def get_filename
-  if @file_name.nil? 
-    return @default_file_name
-  else
-     return @file_name
-  end
-end 
 
 def save_students
-  filename = get_filename
-  puts "File name is [#{filename}]"
+  get_filename
+  puts "File name is [#{@file_name}]"
   # Open the file for writing
-  file = File.open(filename,"w")
+  file = File.open(@file_name,"w")
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
   file.close
-  puts "Student Details Written To File #{filename}"
+  puts "Student Details Written To File #{@file_name}"
 end
 
 
@@ -84,27 +78,42 @@ def load_students(filename = "students.csv")
   # Empty the student array for loading, otherwise we get duplicates
   @students.clear 
   # Open the file for writing
-  file = File.open(filename,"r")
+  file = File.open(@file_name,"r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
     update_array(name,cohort)
   end
   file.close
-  puts "Student Details Read from File #{filename}"
+  puts "Student Details Read from File #{@file_name}"
 end
 
 def try_load_students
-  filename = get_filename
+  get_filename
   # Open the file for writing
-  if File.exists?(filename) # Check it exists
-    load_students(filename)
-    puts "Loaded #{@students.count} from #{filename}"
+  if File.exists?(@file_name) # Check it exists
+    load_students(@file_name)
+    puts "Loaded #{@students.count} from #{@file_name}"
   else
-    puts "Sorry but file, #{filename}, does not exist"
-    exit
+    # Output message and return to the menu
+    puts "Sorry but file, #{@file_name}, does not exist"
+    @file_name.clear
   end
 end
     
+def get_filename
+  if @file_name.nil? || @file_name.length == 0 
+    puts "No commandline file name was specified" 
+    puts "Would you like to specify an input file?"
+    puts "if not then the default, student.csv will be used."
+    puts "Please enter the file name or press return"
+    @file_name = gets.chomp
+    if @file_name.length == 0
+      puts "Setting file name to #{DEFAULT_FILE_NAME}"
+      @file_name = DEFAULT_FILE_NAME
+    end
+  end
+end 
+
 # ------- Print Methods ---------
 
 def print_menu
