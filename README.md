@@ -13,4 +13,4 @@ This program will give a menu of options that allow the user to input, display s
 In addition is it possible to save the student names to a file, the default file name is student.csv
 However it is possible to input an alternative name to read from and write too.
 
-Step 14 enhandements are being saved separately from directory.rb
+Added the CSV stuff and quine
