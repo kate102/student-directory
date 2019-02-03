@@ -12,3 +12,5 @@ The Student Directory allows you to manage the list of students enrolled into th
 This program will give a menu of options that allow the user to input, display student data.
 In addition is it possible to save the student names to a file, the default file name is student.csv
 However it is possible to input an alternative name to read from and write too.
+
+Step 14 enhandements are being saved separately from directory.rb
