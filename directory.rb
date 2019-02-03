@@ -137,10 +137,13 @@ end
 
 def print_footer
   n = @students.length
-  if n > 0
-    puts "Overall, we have #{n} great students"
-  else
-    puts "Overall, we have no students"
+  case n
+    when 0
+      puts "Overall, we have no students"
+    when 1
+      puts "Overall, we have one great student"
+    else
+      puts "Overall, we have #{n} great students"
   end
 end
 
