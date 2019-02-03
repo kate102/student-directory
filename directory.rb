@@ -78,7 +78,8 @@ end
 
 
 def load_students(filename = "students.csv")
-  @students = [] 
+  # Empty the student array for loading, otherwise we get duplicates
+  @students.clear 
   # Open the file for writing
   file = File.open(filename,"r")
   file.readlines.each do |line|
